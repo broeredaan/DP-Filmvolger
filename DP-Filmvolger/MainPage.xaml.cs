@@ -34,7 +34,7 @@ namespace DP_Filmvolger
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            Movie movie = await handler.getMovie("tt0111161");
+            Movie movie = await handler.GetMovie("tt0111161");
             if (movie == null)
             {
                 confirmDialog("Error", "Unable to get movie.");
@@ -51,7 +51,7 @@ namespace DP_Filmvolger
 
         private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            IEnumerable<Movie> movies = await handler.searchMovie(Search.Text, null);
+            IEnumerable<Movie> movies = await handler.SearchMovie(Search.Text, null);
             if (movies == null)
             {
                 confirmDialog("Error", "Unable to get movie.");

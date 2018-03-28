@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace DP_Filmvolger.Classes
 {
-    public class Serie : IMedia
+    public class JsonData
     {
-        public int TotalSeasons { get; set; }
-        public IEnumerable<Season> Seasons { get; set; }
         public string Title { get; set; }
         public string Length { get; set; }
         public string Actors { get; set; }
@@ -24,5 +22,8 @@ namespace DP_Filmvolger.Classes
         public string Language { get; set; }
         public string Country { get; set; }
         public IEnumerable<Rating> Ratings { get; set; }
+        public int TotalSeasons { get; set; }
+        public IEnumerable<Season> Seasons { get; set; }
+        public string BoxOffice { get; set; }
     }
 }

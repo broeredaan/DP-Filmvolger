@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using DP_Filmvolger.Enums;
 
 namespace DP_Filmvolger.Classes
 {
@@ -25,15 +26,35 @@ namespace DP_Filmvolger.Classes
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<Movie> getMovie(string imdbid)
+        public async Task<Movie> GetMovie(string imdbid)
         {
             string parameters = "?apikey=" + apiKey + "&i=" + imdbid + "&type=movie";
             HttpResponseMessage response = client.GetAsync(parameters).Result;
             if(response.IsSuccessStatusCode)
             {
                 string json = response.Content.ReadAsStringAsync().Result;
-                Movie movie = new Movie(json);
-                return movie;
+                JObject movieJson = JObject.Parse(json);
+                JsonData data = new JsonData
+                {
+                    Title = (string)movieJson["Title"],
+                    Length = (string)movieJson["Runtime"],
+                    Actors = (string)movieJson["Actors"],
+                    Director = (string)movieJson["Director"],
+                    ReleaseDate = (string)movieJson["Released"],
+                    Genre = (string)movieJson["Genre"],
+                    PosterUrl = (string)movieJson["Poster"],
+                    Rated = (string)movieJson["Rated"],
+                    Imdbid = (string)movieJson["imdbid"],
+                    Awards = (string)movieJson["Awards"],
+                    Plot = (string)movieJson["Plot"],
+                    Language = (string)movieJson["Language"],
+                    Country = (string)movieJson["Country"],
+                    // TODO Ratings,
+                    Ratings = new List<Rating>(),
+                    BoxOffice = (string)movieJson["BoxOffice"]
+                };
+                MediaFactory factory = new MediaFactory();
+                return (Movie)factory.GetMedia(MediaType.Movie, data);
             }
             else
             {
@@ -41,7 +62,7 @@ namespace DP_Filmvolger.Classes
             }
         }
 
-        public async Task<IEnumerable<Movie>> searchMovie(string search, string[] genres)
+        public async Task<IEnumerable<Movie>> SearchMovie(string search, string[] genres)
         {
             var movielist = new List<Movie>();
             string parameters = "?apikey=" + apiKey + "&t=" + search + "&type=movie";
@@ -49,6 +70,7 @@ namespace DP_Filmvolger.Classes
             if (response.IsSuccessStatusCode)
             {
                 string json = response.Content.ReadAsStringAsync().Result;
+                Debug.WriteLine(json);
                 return null;
             }
             else
@@ -57,12 +79,12 @@ namespace DP_Filmvolger.Classes
             }
         }
 
-        public async Task<Serie> getSerie(string imdbid)
+        public async Task<Serie> GetSerie(string imdbid)
         {
             return null;
         }
 
-        public async Task<IEnumerable<Serie>> searchSerie(string search, string[] genres)
+        public async Task<IEnumerable<Serie>> SearchSerie(string search, string[] genres)
         {
 
             return null;

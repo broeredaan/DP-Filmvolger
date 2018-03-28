@@ -1,21 +1,17 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DP_Filmvolger.Classes
 {
-    class Episode
+    public class Episode
     {
-        private string title;
-        private string rated;
-        private string released;
-        private int episode;
-        private string runtime;
-        private string plot;
-        private string posterUrl;
-        private Rating[] ratings;
-        private string imdbid;
+        public string Title { get; set; }
+        public string Rated { get; set; }
+        public string Released { get; set; }
+        public int Runtime { get; set; }
+        public string Plot { get; set; }
+        public string PosterUrl { get; set; }
+        public IEnumerable<Rating> Ratings { get; set; }
+        public string ImdbId { get; set; }
     }
 }

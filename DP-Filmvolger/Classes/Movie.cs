@@ -8,38 +8,9 @@ using System.Threading.Tasks;
 
 namespace DP_Filmvolger.Classes
 {
-    class Movie : IMedia
+    public class Movie : IMedia
     {
-        private string boxOffice;
-        public Movie(string json)
-        {
-            JObject movie = JObject.Parse(json);
-
-            Title = (string) movie["Title"];
-            Length = (string) movie["Runtime"];
-            Actors = (string)movie["Actors"];
-            Director = (string)movie["Director"];
-            ReleaseDate = (string)movie["Released"];
-            Genre = (string)movie["Genre"];
-            PosterUrl = (string)movie["Poster"];
-            Rated = (string)movie["Rated"];
-            Imdbid = (string)movie["imdbid"];
-            Awards = (string)movie["Awards"];
-            Plot = (string)movie["Plot"];
-            Language = (string)movie["Language"];
-            Country = (string)movie["Country"];
-
-            var rats = new List<Rating>();
-            foreach(var rating in movie["Ratings"])
-            {
-                Rating rat = new Rating(rating);
-                rats.Add(rat);
-            }
-            Ratings = rats;
-
-            boxOffice = (string) movie["BoxOffice"];
-        }
-
+        public string BoxOffice { get; set; }
         public string Title { get; set; }
         public string Length { get; set; }
         public string Actors { get; set; }

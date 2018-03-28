@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DP_Filmvolger.Classes
 {
-    interface IMedia
+    public interface IMedia
     {
         string Title { get; set;}
         string Length { get; set; }

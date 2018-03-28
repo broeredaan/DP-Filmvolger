@@ -97,11 +97,24 @@
     </Compile>
     <Compile Include="Classes\ApiHandler.cs" />
     <Compile Include="Classes\Episode.cs" />
+    <Compile Include="Classes\State\FavouritesState.cs" />
     <Compile Include="Classes\IMedia.cs" />
+    <Compile Include="Classes\State\IState.cs" />
+    <Compile Include="Classes\JsonData.cs" />
+    <Compile Include="Classes\MediaDecorator.cs" />
+    <Compile Include="Classes\SerieDecorator.cs" />
+    <Compile Include="Classes\MovieDecorator.cs" />
+    <Compile Include="Classes\MediaFactory.cs" />
+    <Compile Include="Classes\State\MediaState.cs" />
     <Compile Include="Classes\Movie.cs" />
+    <Compile Include="Classes\Notification.cs" />
+    <Compile Include="Classes\Observer.cs" />
     <Compile Include="Classes\Rating.cs" />
+    <Compile Include="Classes\State\RatingsState.cs" />
     <Compile Include="Classes\Season.cs" />
+    <Compile Include="Classes\SeasonSubject.cs" />
     <Compile Include="Classes\Serie.cs" />
+    <Compile Include="Enums\MediaType.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

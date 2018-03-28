@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DP_Filmvolger.Classes
 {
-    class Season
+    public class Season
     {
-        private string title;
-        private int season;
-        private Episode[] episodes;
+        public string Title { get; set; }
+        public int SeasonNumber { get; set; }
+        public IEnumerable<Episode> Episodes { get; set; }
     }
 }
