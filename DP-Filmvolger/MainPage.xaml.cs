@@ -51,7 +51,7 @@ namespace DP_Filmvolger
 
         private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            IEnumerable<Movie> movies = await handler.SearchMovie(Search.Text, null);
+            IEnumerable<Movie> movies = await handler.SearchMovie(Search.Text);
             if (movies == null)
             {
                 confirmDialog("Error", "Unable to get movie.");
@@ -61,9 +61,7 @@ namespace DP_Filmvolger
             {
                 foreach(var movie in movies)
                 {
-                    confirmDialog(movie.Title, movie.Plot);
-                    var postUrl = new Uri(movie.PosterUrl);
-                    Poster.Source = new BitmapImage(postUrl);
+                    Debug.WriteLine(movie.Title);
                 }
                 
             }

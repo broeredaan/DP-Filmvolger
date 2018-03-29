@@ -34,6 +34,7 @@ namespace DP_Filmvolger.Classes
             {
                 string json = response.Content.ReadAsStringAsync().Result;
                 JObject movieJson = JObject.Parse(json);
+                var rats = movieJson["Ratings"];
                 JsonData data = new JsonData
                 {
                     Title = (string)movieJson["Title"],
@@ -49,8 +50,11 @@ namespace DP_Filmvolger.Classes
                     Plot = (string)movieJson["Plot"],
                     Language = (string)movieJson["Language"],
                     Country = (string)movieJson["Country"],
-                    // TODO Ratings,
-                    Ratings = new List<Rating>(),
+                    Ratings = movieJson["Ratings"].Select(r => new Rating
+                    {
+                        Source = (string)r["Source"],
+                        Value = (string)r["Value"]
+                    }),
                     BoxOffice = (string)movieJson["BoxOffice"]
                 };
                 MediaFactory factory = new MediaFactory();
@@ -62,16 +66,29 @@ namespace DP_Filmvolger.Classes
             }
         }
 
-        public async Task<IEnumerable<Movie>> SearchMovie(string search, string[] genres)
+        public async Task<IEnumerable<Movie>> SearchMovie(string search)
         {
             var movielist = new List<Movie>();
-            string parameters = "?apikey=" + apiKey + "&t=" + search + "&type=movie";
+            string parameters = "?apikey=" + apiKey + "&s=" + search + "&type=movie";
             HttpResponseMessage response = client.GetAsync(parameters).Result;
             if (response.IsSuccessStatusCode)
             {
                 string json = response.Content.ReadAsStringAsync().Result;
-                Debug.WriteLine(json);
-                return null;
+                JObject movieJson = JObject.Parse(json);
+                var movies = new List<JsonData>();
+                movies = movieJson["Search"].Select(r => new JsonData
+                {
+                    Title = r["Title"].ToString(),
+                    ReleaseDate = r["Year"].ToString(),
+                    Imdbid = r["imdbID"].ToString(),
+                    PosterUrl = r["Poster"].ToString()
+                }).ToList();
+                var rats = movieJson["Ratings"];
+                MediaFactory factory = new MediaFactory();
+                return movies.Select(m => {
+                    return (Movie)factory.GetMedia(MediaType.Movie, m);
+
+                });
             }
             else
             {
@@ -81,14 +98,147 @@ namespace DP_Filmvolger.Classes
 
         public async Task<Serie> GetSerie(string imdbid)
         {
-            return null;
+            string parameters = "?apikey=" + apiKey + "&i=" + imdbid + "&type=movie";
+            HttpResponseMessage response = client.GetAsync(parameters).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string json = response.Content.ReadAsStringAsync().Result;
+                JObject serieJson = JObject.Parse(json);
+                var rats = serieJson["Ratings"];
+                JsonData data = new JsonData
+                {
+                    Title = (string)serieJson["Title"],
+                    Length = (string)serieJson["Runtime"],
+                    Actors = (string)serieJson["Actors"],
+                    Director = (string)serieJson["Director"],
+                    ReleaseDate = (string)serieJson["Released"],
+                    Genre = (string)serieJson["Genre"],
+                    PosterUrl = (string)serieJson["Poster"],
+                    Rated = (string)serieJson["Rated"],
+                    Imdbid = (string)serieJson["imdbid"],
+                    Awards = (string)serieJson["Awards"],
+                    Plot = (string)serieJson["Plot"],
+                    Language = (string)serieJson["Language"],
+                    Country = (string)serieJson["Country"],
+                    Ratings = serieJson["Ratings"].Select(r => new Rating
+                    {
+                        Source = (string)r["Source"],
+                        Value = (string)r["Value"]
+                    }),
+                    TotalSeasons = (int)serieJson["totalSeasons"],
+                    Seasons = new List<Season>()
+                };
+                MediaFactory factory = new MediaFactory();
+                return (Serie)factory.GetMedia(MediaType.Series, data);
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        public async Task<IEnumerable<Serie>> SearchSerie(string search, string[] genres)
+        public async Task<IEnumerable<Serie>> SearchSerie(string search)
         {
+            var movielist = new List<Serie>();
+            string parameters = "?apikey=" + apiKey + "&s=" + search + "&type=movie";
+            HttpResponseMessage response = client.GetAsync(parameters).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string json = response.Content.ReadAsStringAsync().Result;
+                JObject serieJson = JObject.Parse(json);
+                var series = new List<JsonData>();
+                series = serieJson["Search"].Select(r => new JsonData
+                {
+                    Title = r["Title"].ToString(),
+                    ReleaseDate = r["Year"].ToString(),
+                    Imdbid = r["imdbID"].ToString(),
+                    PosterUrl = r["Poster"].ToString()
+                }).ToList();
+                var rats = serieJson["Ratings"];
+                MediaFactory factory = new MediaFactory();
+                return series.Select(s => {
+                    return (Serie)factory.GetMedia(MediaType.Series, s);
 
-            return null;
+                });
+            }
+            else
+            {
+                return null;
+            }
         }
 
+        public async Task<Season> GetSeason(string imdbid, int season)
+        {
+            string parameters = "?apikey=" + apiKey + "&i=" + imdbid + "&type=movie" + "&season=" + season;
+            HttpResponseMessage response = client.GetAsync(parameters).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string json = response.Content.ReadAsStringAsync().Result;
+                JObject seasonJson = JObject.Parse(json);
+
+                return new Season
+                {
+                    Title = (string)seasonJson["Title"],
+                    SeasonNumber = (int)seasonJson["Season"],
+                    Episodes = seasonJson["Episodes"].Select(s => new Episode
+                    {
+                        Title = (string)s["Title"],
+                        Released = (string)s["Released"],
+                        EpisodeNumber = (int)s["Episode"],
+                        Ratings = new List<Rating>() { new Rating() {
+                            Source = "Internet Movie Database",
+                            Value = (string)s["imdbRating"]
+                        }},
+                        ImdbId = (string)s["imdbID"],
+                    })
+                };
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public async Task<IEnumerable<Season>> GetSeasons(string imdbid, int seasons)
+        {
+            var s = new List<Season>();
+            for(int i = 0; i < seasons; i++)
+            {
+                s.Add(await GetSeason(imdbid, i));
+            }
+            return s;
+        }
+
+        public async Task<Episode> GetEpisode(string imdbid, int season, int episode)
+        {
+            string parameters = "?apikey=" + apiKey + "&i=" + imdbid + "&type=movie" + "&season=" + season + "&episode=" + episode;
+            HttpResponseMessage response = client.GetAsync(parameters).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string json = response.Content.ReadAsStringAsync().Result;
+                JObject episodeJson = JObject.Parse(json);
+
+                return new Episode
+                {
+                    Title = (string)episodeJson["Title"],
+                    Rated = (string)episodeJson["Rated"],
+                    Ratings = episodeJson["Ratings"].Select(r => new Rating
+                    {
+                        Source = (string)r["Source"],
+                        Value = (string)r["Value"]
+                    }),
+                    EpisodeNumber = (int)episodeJson["Episode"],
+                    ImdbId = (string)episodeJson["imdbID"],
+                    Plot = (string)episodeJson["Plot"],
+                    PosterUrl = (string)episodeJson["Poster"],
+                    Released = (string)episodeJson["Released"],
+                    Runtime = (string)episodeJson["Runtime"]
+                };
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

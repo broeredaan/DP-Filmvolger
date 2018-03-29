@@ -26,4 +26,11 @@ namespace DP_Filmvolger.Classes
         public IEnumerable<Season> Seasons { get; set; }
         public string BoxOffice { get; set; }
     }
+
+    public class JsonDataSeason
+    {
+        public string Title { get; set; }
+        public int SeasonNumber { get; set; }
+        public IEnumerable<Episode> Episodes { get; set; }
+    }
 }
