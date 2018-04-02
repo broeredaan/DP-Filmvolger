@@ -8,9 +8,19 @@ namespace DP_Filmvolger.Classes.State
 {
     public class FavouritesState : IState
     {
+    
         public void Handle()
         {
-            throw new NotImplementedException();
+   
         }
+
+        public string DisplayGrid()
+        {
+            string unhide = "FavGrid";
+            return unhide;
+        }
+
+
     }
+
 }

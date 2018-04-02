@@ -6,11 +6,20 @@ using System.Threading.Tasks;
 
 namespace DP_Filmvolger.Classes.State
 {
-    class RatingsState : IState
+    public class RatingsState : IState
     {
+
         public void Handle()
         {
             throw new NotImplementedException();
         }
+
+        public string DisplayGrid()
+        {
+            string unhide = "RatingsGrid";
+            return unhide;
+        }
+
     }
+
 }

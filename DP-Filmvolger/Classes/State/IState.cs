@@ -9,5 +9,7 @@ namespace DP_Filmvolger.Classes.State
     public interface IState
     {
         void Handle();
+        string DisplayGrid();   
     }
+
 }

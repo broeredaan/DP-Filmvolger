@@ -5,12 +5,94 @@
     xmlns:local="using:DP_Filmvolger"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:DP_Filmvolger.Classes"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Image x:Name="Poster" HorizontalAlignment="Left" Margin="16,16,0,0" VerticalAlignment="Top" Width="400" Height="800"/>
-        <TextBox x:Name="Search" HorizontalAlignment="Center" Margin="0,-200,0,0" Width="200" Text="" VerticalAlignment="Center" PlaceholderText="Movie Title"/>
-        <Button Content="Shaw" HorizontalAlignment="Center" VerticalAlignment="Center" Height="128" Width="256" FontSize="72" Click="Button_Click"/>
-        <Button Content="Search" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,300,0,0" Height="128" Width="256" FontSize="72" Click="Button_Click_1"/>
+    <!-- Root Grid -->
+    <Grid  x:Name="RootGrid" Background="White" Visibility="Visible">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Button Content="Search" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"  FontSize="50" Click="Button_Click"/>
+        <Button Content="Favorites" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"  FontSize="50" Click="Button_Click_1"/>
+        <Button Content="Ratings" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Center"  FontSize="50" Click="Button_Click_2"/>
+
+        <Image x:Name="Poster" HorizontalAlignment="Left" Margin="258,384,-756,-928" VerticalAlignment="Top" Width="498" Height="544" Grid.ColumnSpan="5" Grid.RowSpan="5"/>
+        <TextBox x:Name="Search" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Text="" VerticalAlignment="Bottom" PlaceholderText="Movie Title"/>
+
+
+        <!--MediaState -->
+        <Grid x:Name="MediaGrid" Visibility="Visible" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="4">
+
+
+            <ListView x:Name="DataList" ItemsSource="{x:Bind movies}" IsItemClickEnabled="True" ItemClick="GridView_ItemClick" Grid.Row="1" Grid.Column="1" Grid.RowSpan="4" Grid.ColumnSpan="3">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="data:Movie"> 
+                       <StackPanel Orientation="Horizontal">
+                            <Image x:Name="Poster" Width="150" Source="{x:Bind PosterUrl}" HorizontalAlignment="Left" Margin="0,5,0,5" />
+                            <TextBlock FontSize="12" Text="{x:Bind Title}" Padding="10,10,0,0" />
+                            <TextBlock FontSize="12" Text="{x:Bind Length}" Padding="10,5,0,0" />
+                            <TextBlock FontSize="12" Text="{x:Bind Genre}" Padding="10,5,0,0" />
+                            <TextBlock FontSize="12" Text="{x:Bind Plot}" Padding="10,5,0,0" />
+                           
+                        </StackPanel>
+                    </DataTemplate> 
+                </ListView.ItemTemplate>
+                
+            </ListView>
+        </Grid>
+
+        <!--FavoriteState -->
+        <Grid x:Name="FavGrid" Visibility="Collapsed" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="4">
+
+            <ListView x:Name="favList" ItemsSource="{x:Bind favMovies}" IsItemClickEnabled="True" ItemClick="GridView_ItemClick" Grid.Row="1" Grid.Column="1" Grid.RowSpan="4" Grid.ColumnSpan="3">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="data:Movie">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                            <Image x:Name="Poster" Width="150" Source="{x:Bind PosterUrl}" HorizontalAlignment="Left" Margin="0,5,0,5" />
+                            <TextBlock FontSize="12" Text="{x:Bind Title}" Padding="10,10,0,0" />
+                            <TextBlock FontSize="12" Text="{x:Bind Length}" Padding="10,5,0,0" />
+                            <TextBlock FontSize="12" Text="{x:Bind Genre}" Padding="10,5,0,0" />
+                            <TextBlock FontSize="12" Text="{x:Bind Plot}" Padding="10,5,0,0" />
+
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="9*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <ComboBox HorizontalAlignment="Right" HorizontalContentAlignment="Right" Grid.Column="1">
+                                    <ComboBoxItem Content="1"/>
+                                    <ComboBoxItem Content="2"/>
+                                    <ComboBoxItem Content="3"/>
+                                    <ComboBoxItem Content="4"/>
+                                    <ComboBoxItem Content="5"/>
+                                </ComboBox>
+                            </Grid>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+        </Grid>
+
+        <!--RatingState-->
+        <Grid x:Name="RatingGrid" Visibility="Collapsed" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="4">
+            <TextBlock Text="Ratings" />
+        </Grid>
+
+
     </Grid>
 </Page>
