@@ -148,7 +148,7 @@ namespace DP_Filmvolger.Classes
             }
         }
 
-        public async Task<IEnumerable<Serie>> SearchSerie(string search)
+        public async Task<IEnumerable<SerieDecorator>> SearchSerie(string search)
         {
             var movielist = new List<Serie>();
             string parameters = "?apikey=" + apiKey + "&s=" + search + "&type=movie";
@@ -171,13 +171,13 @@ namespace DP_Filmvolger.Classes
                     MediaFactory factory = new MediaFactory();
                     return series.Select(s =>
                     {
-                        return (Serie)factory.GetMedia(MediaType.Series, s);
+                        return (SerieDecorator)factory.GetMedia(MediaType.Series, s);
 
                     });
                 }
                 else
                 {
-                    return new List<Serie>();
+                    return new List<SerieDecorator>();
                 }
             }
             else
