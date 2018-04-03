@@ -114,6 +114,7 @@ namespace DP_Filmvolger.Classes
             {
                 string json = response.Content.ReadAsStringAsync().Result;
                 JObject serieJson = JObject.Parse(json);
+
                 var rats = serieJson["Ratings"];
                 JsonData data = new JsonData
                 {
@@ -156,20 +157,28 @@ namespace DP_Filmvolger.Classes
             {
                 string json = response.Content.ReadAsStringAsync().Result;
                 JObject serieJson = JObject.Parse(json);
-                var series = new List<JsonData>();
-                series = serieJson["Search"].Select(r => new JsonData
+                if (serieJson["Response"].ToString() != "false")
                 {
-                    Title = r["Title"].ToString(),
-                    ReleaseDate = r["Year"].ToString(),
-                    Imdbid = r["imdbID"].ToString(),
-                    PosterUrl = r["Poster"].ToString()
-                }).ToList();
-                var rats = serieJson["Ratings"];
-                MediaFactory factory = new MediaFactory();
-                return series.Select(s => {
-                    return (Serie)factory.GetMedia(MediaType.Series, s);
+                    var series = new List<JsonData>();
+                    series = serieJson["Search"].Select(r => new JsonData
+                    {
+                        Title = r["Title"].ToString(),
+                        ReleaseDate = r["Year"].ToString(),
+                        Imdbid = r["imdbID"].ToString(),
+                        PosterUrl = r["Poster"].ToString()
+                    }).ToList();
+                    var rats = serieJson["Ratings"];
+                    MediaFactory factory = new MediaFactory();
+                    return series.Select(s =>
+                    {
+                        return (Serie)factory.GetMedia(MediaType.Series, s);
 
-                });
+                    });
+                }
+                else
+                {
+                    return new List<Serie>();
+                }
             }
             else
             {
