@@ -68,17 +68,33 @@ namespace DP_Filmvolger.Classes
             foreach (var favourite in Favourites)
             {
                 if (favourite.GetType() == typeof(MovieDecorator))
-                    newFavourites.Add(handler.GetMovie(favourite.Imdbid).Result);
+                {
+                    var newF = handler.GetMovie(favourite.Imdbid).Result;
+                    newF.IsFavourite = ((MovieDecorator)favourite).IsFavourite;
+                    newFavourites.Add(newF);
+                }
                 else
-                    newFavourites.Add(handler.GetSerie(favourite.Imdbid).Result);
+                {
+                    var newF = handler.GetSerie(favourite.Imdbid).Result;
+                    newF.IsFavourite = ((SerieDecorator)favourite).IsFavourite;
+                    newFavourites.Add(newF);
+                }
             }
 
             foreach (var rating in Ratings)
             {
                 if (rating.GetType() == typeof(MovieDecorator))
-                    newRatings.Add(handler.GetMovie(rating.Imdbid).Result);
+                {
+                    var newR = handler.GetMovie(rating.Imdbid).Result;
+                    newR.UserRating = ((MovieDecorator)rating).UserRating;
+                    newRatings.Add(newR);
+                }
                 else
-                    newRatings.Add(handler.GetSerie(rating.Imdbid).Result);
+                {
+                    var newR = handler.GetSerie(rating.Imdbid).Result;
+                    newR.UserRating = ((SerieDecorator)rating).UserRating;
+                    newRatings.Add(newR);
+                }
             }
 
             Favourites = newFavourites;

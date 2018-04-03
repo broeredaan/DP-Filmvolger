@@ -26,7 +26,7 @@ namespace DP_Filmvolger.Classes
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<Movie> GetMovie(string imdbid)
+        public async Task<MovieDecorator> GetMovie(string imdbid)
         {
             string parameters = "?apikey=" + apiKey + "&i=" + imdbid + "&type=movie";
             HttpResponseMessage response = client.GetAsync(parameters).Result;
@@ -58,7 +58,7 @@ namespace DP_Filmvolger.Classes
                     BoxOffice = (string)movieJson["BoxOffice"]
                 };
                 MediaFactory factory = new MediaFactory();
-                return (Movie)factory.GetMedia(MediaType.Movie, data);
+                return (MovieDecorator)factory.GetMedia(MediaType.Movie, data);
             }
             else
             {
@@ -106,7 +106,7 @@ namespace DP_Filmvolger.Classes
             }
         }
 
-        public async Task<Serie> GetSerie(string imdbid)
+        public async Task<SerieDecorator> GetSerie(string imdbid)
         {
             string parameters = "?apikey=" + apiKey + "&i=" + imdbid + "&type=movie";
             HttpResponseMessage response = client.GetAsync(parameters).Result;
@@ -140,7 +140,7 @@ namespace DP_Filmvolger.Classes
                     Seasons = new List<Season>()
                 };
                 MediaFactory factory = new MediaFactory();
-                return (Serie)factory.GetMedia(MediaType.Series, data);
+                return (SerieDecorator)factory.GetMedia(MediaType.Series, data);
             }
             else
             {
