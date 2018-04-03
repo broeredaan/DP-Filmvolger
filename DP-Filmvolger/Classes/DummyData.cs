@@ -60,6 +60,29 @@ namespace DP_Filmvolger.Classes
                     UserRating = 1
                 }
             };
+
+            var newFavourites = new List<IMedia>();
+            var newRatings = new List<IMedia>();
+            var handler = new ApiHandler();
+
+            foreach (var favourite in Favourites)
+            {
+                if (favourite.GetType() == typeof(MovieDecorator))
+                    newFavourites.Add(handler.GetMovie(favourite.Imdbid).Result);
+                else
+                    newFavourites.Add(handler.GetSerie(favourite.Imdbid).Result);
+            }
+
+            foreach (var rating in Ratings)
+            {
+                if (rating.GetType() == typeof(MovieDecorator))
+                    newRatings.Add(handler.GetMovie(rating.Imdbid).Result);
+                else
+                    newRatings.Add(handler.GetSerie(rating.Imdbid).Result);
+            }
+
+            Favourites = newFavourites;
+            Ratings = newRatings;
         }
     }
 }
