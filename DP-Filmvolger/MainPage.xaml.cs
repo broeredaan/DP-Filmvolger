@@ -84,8 +84,7 @@ namespace DP_Filmvolger
             RatingGrid.Visibility = Visibility.Collapsed;
             if (!String.IsNullOrEmpty(Search.Text))
             {
-                var moviesList = await handler.SearchMovie(Search.Text.ToString());
-                movies = moviesList.Select(c => (MovieDecorator)c);
+                movies = await handler.SearchMovie(Search.Text.ToString());
                 if (movies == null)
                 {
                     Debug.WriteLine("Movie is Null");

@@ -66,7 +66,7 @@ namespace DP_Filmvolger.Classes
             }
         }
 
-        public async Task<IEnumerable<Movie>> SearchMovie(string search)
+        public async Task<IEnumerable<MovieDecorator>> SearchMovie(string search)
         {
             var movielist = new List<Movie>();
             string parameters = "?apikey=" + apiKey + "&s=" + search + "&type=movie";
@@ -91,13 +91,13 @@ namespace DP_Filmvolger.Classes
                     MediaFactory factory = new MediaFactory();
                     return movies.Select(m =>
                     {
-                        return (Movie)factory.GetMedia(MediaType.Movie, m);
+                        return (MovieDecorator)factory.GetMedia(MediaType.Movie, m);
 
                     });
                 }
                 else
                 {
-                    return new List<Movie>();
+                    return new List<MovieDecorator>();
                 }
             }
             else
