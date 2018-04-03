@@ -9,11 +9,11 @@ namespace DP_Filmvolger.Classes
 {
     public class MediaFactory
     {
-        public IMedia GetMedia(MediaType mediaType, JsonData data)
+        public IMediaDecorator GetMedia(MediaType mediaType, JsonData data)
         {
             if(mediaType == MediaType.Series)
             {
-                return new Serie {
+                return new SerieDecorator {
                     Title = data.Title,
                     Length = data.Length,
                     Actors = data.Actors,
@@ -34,7 +34,7 @@ namespace DP_Filmvolger.Classes
             }
             else if (mediaType == MediaType.Movie)
             {
-                return new Movie
+                return new MovieDecorator
                 {
                     Title = data.Title,
                     Length = data.Length,
