@@ -35,19 +35,35 @@
 
         <!--MediaState -->
         <Grid x:Name="MediaGrid" Visibility="Visible" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="4">
-
+   
 
             <ListView x:Name="DataList" ItemsSource="{x:Bind movies}" IsItemClickEnabled="True" ItemClick="GridView_ItemClick" Grid.Row="1" Grid.Column="1" Grid.RowSpan="4" Grid.ColumnSpan="3">
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="data:Movie"> 
-                       <StackPanel Orientation="Horizontal">
+
+                    <DataTemplate x:DataType="data:Movie">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="500"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Horizontal">
                             <Image x:Name="Poster" Width="150" Source="{x:Bind PosterUrl}" HorizontalAlignment="Left" Margin="0,5,0,5" />
                             <TextBlock FontSize="12" Text="{x:Bind Title}" Padding="10,10,0,0" />
                             <TextBlock FontSize="12" Text="{x:Bind Length}" Padding="10,5,0,0" />
                             <TextBlock FontSize="12" Text="{x:Bind Genre}" Padding="10,5,0,0" />
                             <TextBlock FontSize="12" Text="{x:Bind Plot}" Padding="10,5,0,0" />
-                           
-                        </StackPanel>
+                            </StackPanel>
+                            <ComboBox HorizontalAlignment="Right" HorizontalContentAlignment="Right" Grid.Column="1" >
+                                <ComboBoxItem Content="1"/>
+                                <ComboBoxItem Content="2"/>
+                                <ComboBoxItem Content="3"/>
+                                <ComboBoxItem Content="4"/>
+                                <ComboBoxItem Content="5"/>
+                            </ComboBox>
+                            <ToggleSwitch />
+                        </Grid>
                     </DataTemplate> 
                 </ListView.ItemTemplate>
                 
@@ -73,13 +89,6 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <ComboBox HorizontalAlignment="Right" HorizontalContentAlignment="Right" Grid.Column="1">
-                                    <ComboBoxItem Content="1"/>
-                                    <ComboBoxItem Content="2"/>
-                                    <ComboBoxItem Content="3"/>
-                                    <ComboBoxItem Content="4"/>
-                                    <ComboBoxItem Content="5"/>
-                                </ComboBox>
                             </Grid>
                         </StackPanel>
                     </DataTemplate>

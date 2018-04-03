@@ -50,8 +50,6 @@ namespace DP_Filmvolger
 
         public void ChangeState(IState state)         // Not Functional
         {
-
-
             if (state != null)
             {
                 MediaGrid.Visibility = Visibility.Collapsed;
@@ -66,10 +64,7 @@ namespace DP_Filmvolger
             }
             Debug.WriteLine("state empty");
         }
-
-
         
-
         // SearchButton
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
