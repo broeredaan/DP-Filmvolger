@@ -54,7 +54,7 @@ namespace DP_Filmvolger
         }
 
 
-        public void ChangeState(IState state)         // Not Functional
+        public void ChangeState(IState state)     // Not Functional
         {
             if (state != null)
             {
@@ -63,7 +63,6 @@ namespace DP_Filmvolger
                 RatingGrid.Visibility = Visibility.Collapsed;
 
                 var find = state.DisplayGrid();
-
 
                 Grid grid = FindName(find) as Grid;
                 grid.Visibility = Visibility.Visible;
@@ -125,7 +124,6 @@ namespace DP_Filmvolger
         // Click on Item in List
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-      
         }
 
         //

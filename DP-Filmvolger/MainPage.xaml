@@ -62,7 +62,7 @@
                                 <ComboBoxItem Content="4"/>
                                 <ComboBoxItem Content="5"/>
                             </ComboBox>
-                            <ToggleSwitch />
+                            <ToggleSwitch Grid.Column="2" />
                         </Grid>
                     </DataTemplate> 
                 </ListView.ItemTemplate>
@@ -99,7 +99,30 @@
 
         <!--RatingState-->
         <Grid x:Name="RatingGrid" Visibility="Collapsed" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="4">
-            <TextBlock Text="Ratings" />
+            <ListView x:Name="ratingList" ItemsSource="{x:Bind ratedMovies}" IsItemClickEnabled="True" ItemClick="GridView_ItemClick" Grid.Row="1" Grid.Column="1" Grid.RowSpan="4" Grid.ColumnSpan="3">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="data:Movie">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="500"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                <Image x:Name="Poster" Width="150" Source="{x:Bind PosterUrl}" HorizontalAlignment="Left" Margin="0,5,0,5" />
+                                <TextBlock FontSize="12" Text="{x:Bind Title}" Padding="10,10,0,0" />
+                                <TextBlock FontSize="12" Text="{x:Bind Length}" Padding="10,5,0,0" />
+                                <TextBlock FontSize="12" Text="{x:Bind Genre}" Padding="10,5,0,0" />
+                                <TextBlock FontSize="12" Text="{x:Bind Plot}" Padding="10,5,0,0" />
+                            </StackPanel>
+
+                            <TextBlock FontSize="12" Text="{x:Bind UserRating}" Padding="10,5,0,0" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
         </Grid>
 
 
