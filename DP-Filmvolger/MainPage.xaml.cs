@@ -28,11 +28,11 @@ namespace DP_Filmvolger
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public IEnumerable<Movie> movies;
-        public IEnumerable<Movie> favMovies;     // Vullen met Favorites
-        public IEnumerable<Serie> favSeries;     // Vullen met Favorites
-        public IEnumerable<Movie> ratedMovies;     // Vullen met Favorites
-        public IEnumerable<Serie> ratedSeries;     // Vullen met Favorites
+        public IEnumerable<MovieDecorator> movies;
+        public IEnumerable<MovieDecorator> favMovies;     // Vullen met Favorites
+        public IEnumerable<SerieDecorator> favSeries;     // Vullen met Favorites
+        public IEnumerable<MovieDecorator> ratedMovies;     // Vullen met Favorites
+        public IEnumerable<SerieDecorator> ratedSeries;     // Vullen met Favorites
         public IState mediaState;
         public IState favoriteState;
         public RatingsState ratingsState;
@@ -46,10 +46,10 @@ namespace DP_Filmvolger
 
         public void DummyDataFill()
         {
-            favMovies = DummyData.Favourites.Where(c => c.GetType() == typeof(Movie)).Select(c => (Movie)c);
-            favSeries = DummyData.Favourites.Where(c => c.GetType() == typeof(Serie)).Select(c => (Serie)c);
-            ratedMovies = DummyData.Ratings.Where(c => c.GetType() == typeof(Movie)).Select(c => (Movie)c);
-            ratedSeries = DummyData.Ratings.Where(c => c.GetType() == typeof(Serie)).Select(c => (Serie)c);
+            favMovies = DummyData.Favourites.Where(c => c.GetType() == typeof(MovieDecorator)).Select(c => (MovieDecorator)c);
+            favSeries = DummyData.Favourites.Where(c => c.GetType() == typeof(SerieDecorator)).Select(c => (SerieDecorator)c);
+            ratedMovies = DummyData.Ratings.Where(c => c.GetType() == typeof(MovieDecorator)).Select(c => (MovieDecorator)c);
+            ratedSeries = DummyData.Ratings.Where(c => c.GetType() == typeof(SerieDecorator)).Select(c => (SerieDecorator)c);
             favList.ItemsSource = favMovies;
         }
 

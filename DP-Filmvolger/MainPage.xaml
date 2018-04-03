@@ -62,7 +62,7 @@
                                 <ComboBoxItem Content="4"/>
                                 <ComboBoxItem Content="5"/>
                             </ComboBox>
-                            <ToggleSwitch Grid.Column="2" Padding="5,5,0,0" Toggled="" />
+                            <ToggleSwitch Grid.Column="2" Padding="5,5,0,0" />
                         </Grid>
                     </DataTemplate> 
                 </ListView.ItemTemplate>
