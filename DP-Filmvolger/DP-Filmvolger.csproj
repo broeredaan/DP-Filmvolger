@@ -96,6 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\ApiHandler.cs" />
+    <Compile Include="Classes\DummyData.cs" />
     <Compile Include="Classes\Episode.cs" />
     <Compile Include="Classes\State\FavouritesState.cs" />
     <Compile Include="Classes\IMedia.cs" />

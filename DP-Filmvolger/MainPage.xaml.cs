@@ -30,6 +30,9 @@ namespace DP_Filmvolger
     {
         public IEnumerable<Movie> movies;
         public IEnumerable<Movie> favMovies;     // Vullen met Favorites
+        public IEnumerable<Serie> favSeries;     // Vullen met Favorites
+        public IEnumerable<Movie> ratedMovies;     // Vullen met Favorites
+        public IEnumerable<Serie> ratedSeries;     // Vullen met Favorites
         public IState mediaState;
         public IState favoriteState;
         public RatingsState ratingsState;
@@ -38,12 +41,15 @@ namespace DP_Filmvolger
         public MainPage()
         {
             this.InitializeComponent();
-            DummyData();
+            DummyDataFill();
         }
 
-        public async void DummyData()
+        public void DummyDataFill()
         {
-            favMovies = await handler.SearchMovie("buurman");
+            favMovies = DummyData.Favourites.Where(c => c.GetType() == typeof(Movie)).Select(c => (Movie)c);
+            favSeries = DummyData.Favourites.Where(c => c.GetType() == typeof(Serie)).Select(c => (Serie)c);
+            ratedMovies = DummyData.Ratings.Where(c => c.GetType() == typeof(Movie)).Select(c => (Movie)c);
+            ratedSeries = DummyData.Ratings.Where(c => c.GetType() == typeof(Serie)).Select(c => (Serie)c);
             favList.ItemsSource = favMovies;
         }
 
@@ -73,7 +79,8 @@ namespace DP_Filmvolger
             RatingGrid.Visibility = Visibility.Collapsed;
             if (!String.IsNullOrEmpty(Search.Text))
             {
-                movies = await handler.SearchMovie(Search.Text.ToString());
+                var moviesList = await handler.SearchMovie(Search.Text.ToString());
+                movies = moviesList.Select(c => (MovieDecorator)c);
                 if (movies == null)
                 {
                     Debug.WriteLine("Movie is Null");
