@@ -62,7 +62,7 @@
                                 <ComboBoxItem Content="4"/>
                                 <ComboBoxItem Content="5"/>
                             </ComboBox>
-                            <ToggleSwitch Grid.Column="2" />
+                            <ToggleSwitch Grid.Column="2" Padding="5,5,0,0" />
                         </Grid>
                     </DataTemplate> 
                 </ListView.ItemTemplate>
@@ -117,7 +117,7 @@
                                 <TextBlock FontSize="12" Text="{x:Bind Plot}" Padding="10,5,0,0" />
                             </StackPanel>
 
-                            <TextBlock FontSize="12" Text="{x:Bind UserRating}" Padding="10,5,0,0" />
+                            <TextBlock FontSize="12" Text="VERANDER MIJ IN RATING" Padding="10,5,0,0" />
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
