@@ -76,19 +76,29 @@ namespace DP_Filmvolger.Classes
                 string json = response.Content.ReadAsStringAsync().Result;
                 JObject movieJson = JObject.Parse(json);
                 var movies = new List<JsonData>();
-                movies = movieJson["Search"].Select(r => new JsonData
-                {
-                    Title = r["Title"].ToString(),
-                    ReleaseDate = r["Year"].ToString(),
-                    Imdbid = r["imdbID"].ToString(),
-                    PosterUrl = r["Poster"].ToString()
-                }).ToList();
-                var rats = movieJson["Ratings"];
-                MediaFactory factory = new MediaFactory();
-                return movies.Select(m => {
-                    return (Movie)factory.GetMedia(MediaType.Movie, m);
 
-                });
+                if (movieJson["Response"].ToString() != "false")
+                {
+                    movies = movieJson["Search"].Select(r => new JsonData
+                    {
+                        Title = r["Title"].ToString(),
+                        ReleaseDate = r["Year"].ToString(),
+                        Imdbid = r["imdbID"].ToString(),
+                        PosterUrl = r["Poster"].ToString()
+                    }).ToList();
+
+                    var rats = movieJson["Ratings"];
+                    MediaFactory factory = new MediaFactory();
+                    return movies.Select(m =>
+                    {
+                        return (Movie)factory.GetMedia(MediaType.Movie, m);
+
+                    });
+                }
+                else
+                {
+                    return new List<Movie>();
+                }
             }
             else
             {

@@ -25,11 +25,11 @@ namespace DP_Filmvolger.Classes
             observers.Remove(observer);
         }
 
-        public void NotifyObservers()
+        public void NotifyObservers(string message)
         {
             foreach(var observer in observers)
             {
-                observer.Update("Awesome!!");
+                observer.Update(message);
             }
         }
     }
