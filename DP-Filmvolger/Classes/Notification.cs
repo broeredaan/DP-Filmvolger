@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace DP_Filmvolger.Classes
 {
-    public static class Notification
+    public static class Notification 
     {
         public static void AddNotification(string message)
         {
-            // TODO
-            throw new NotImplementedException();
+            
         }
     }
 }

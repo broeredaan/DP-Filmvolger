@@ -10,10 +10,12 @@ namespace DP_Filmvolger.Classes.State
     public class MediaState : IState
     {
 
-        public void Handle()
+        public void Handle(MainPage page)
         {
-          
+            page.HideAll();
+            page.ShowMedia();
         }
+
         public string DisplayGrid()
         {
             string unhide = "MediaGrid";

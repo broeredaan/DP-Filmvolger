@@ -9,10 +9,12 @@ namespace DP_Filmvolger.Classes.State
     public class RatingsState : IState
     {
 
-        public void Handle()
+        public void Handle(MainPage page)
         {
-            throw new NotImplementedException();
+            page.HideAll();
+            page.ShowRating();
         }
+
 
         public string DisplayGrid()
         {

@@ -9,9 +9,10 @@ namespace DP_Filmvolger.Classes.State
     public class FavouritesState : IState
     {
     
-        public void Handle()
+        public void Handle(MainPage page)
         {
-   
+            page.HideAll();
+            page.ShowFavorites();
         }
 
         public string DisplayGrid()

@@ -28,11 +28,13 @@ namespace DP_Filmvolger
     /// </summary>
     public sealed partial class MainPage : Page
     {
+       
         public IEnumerable<MovieDecorator> movies;
         public IEnumerable<MovieDecorator> favMovies;     // Vullen met Favorites
         public IEnumerable<SerieDecorator> favSeries;     // Vullen met Favorites
         public IEnumerable<MovieDecorator> ratedMovies;     // Vullen met Favorites
         public IEnumerable<SerieDecorator> ratedSeries;     // Vullen met Favorites
+        public SeasonSubject seasonSubject = new SeasonSubject();
         public IState mediaState;
         public IState favoriteState;
         public RatingsState ratingsState;
@@ -43,6 +45,8 @@ namespace DP_Filmvolger
             this.InitializeComponent();
             DummyDataFill();
         }
+
+
 
         public void DummyDataFill()
         {
@@ -58,24 +62,27 @@ namespace DP_Filmvolger
         {
             if (state != null)
             {
-                MediaGrid.Visibility = Visibility.Collapsed;
-                FavGrid.Visibility = Visibility.Collapsed;
-                RatingGrid.Visibility = Visibility.Collapsed;
-
-                var find = state.DisplayGrid();
-
-                Grid grid = FindName(find) as Grid;
-                grid.Visibility = Visibility.Visible;
+                state.Handle(this);
             }
             Debug.WriteLine("state empty");
         }
-        
+
+        public void HideAll()    
+        {
+            MediaGrid.Visibility = Visibility.Collapsed;
+            FavGrid.Visibility = Visibility.Collapsed;
+            RatingGrid.Visibility = Visibility.Collapsed;
+            Debug.WriteLine("all grids hidden");
+        }
+
+        public void ShowMedia() { MediaGrid.Visibility = Visibility.Visible; }
+        public void ShowFavorites() { FavGrid.Visibility = Visibility.Visible; }
+        public void ShowRating() { RatingGrid.Visibility = Visibility.Visible; }
+
         // SearchButton
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            MediaGrid.Visibility = Visibility.Visible;
-            FavGrid.Visibility = Visibility.Collapsed;
-            RatingGrid.Visibility = Visibility.Collapsed;
+            new MediaState().Handle(this);
             if (!String.IsNullOrEmpty(Search.Text))
             {
                 movies = await handler.SearchMovie(Search.Text.ToString());
@@ -103,26 +110,22 @@ namespace DP_Filmvolger
         }
 
         // FavoritesButton
-        private async void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            //  ChangeState(favoriteState);
-            MediaGrid.Visibility = Visibility.Collapsed;
-            FavGrid.Visibility = Visibility.Visible;
-            RatingGrid.Visibility = Visibility.Collapsed;
+            new FavouritesState().Handle(this);
         }
 
         // RatingButton
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            
-            MediaGrid.Visibility = Visibility.Collapsed;
-            FavGrid.Visibility = Visibility.Collapsed;
-            RatingGrid.Visibility = Visibility.Visible;
+
+            new RatingsState().Handle(this);
         }
 
         // Click on Item in List
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
+
         }
 
         //
@@ -137,5 +140,28 @@ namespace DP_Filmvolger
             ContentDialogResult result = await testDialog.ShowAsync();
         }
 
+        private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch != null)
+            {
+                if (toggleSwitch.IsOn == true)
+                {
+                   
+                }
+                else
+                {
+           
+                }
+            }
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            Observer observer = new Observer();
+            
+            seasonSubject.Register(observer);
+            seasonSubject.NotifyObservers("TestBericht");
+        }
     }
 }

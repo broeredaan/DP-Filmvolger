@@ -28,6 +28,7 @@
         <Button Content="Search" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"  FontSize="50" Click="Button_Click"/>
         <Button Content="Favorites" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"  FontSize="50" Click="Button_Click_1"/>
         <Button Content="Ratings" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Center"  FontSize="50" Click="Button_Click_2"/>
+        <Button Content="Test Observer" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="15" Click="Button_Click_3"/>
 
         <Image x:Name="Poster" HorizontalAlignment="Left" Margin="258,384,-756,-928" VerticalAlignment="Top" Width="498" Height="544" Grid.ColumnSpan="5" Grid.RowSpan="5"/>
         <TextBox x:Name="Search" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Text="" VerticalAlignment="Bottom" PlaceholderText="Movie Title"/>
@@ -43,26 +44,26 @@
                     <DataTemplate x:DataType="data:MovieDecorator">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="500"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="200"/>
                                 
                             </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0" Orientation="Horizontal">
                             <Image x:Name="Poster" Width="150" Source="{x:Bind PosterUrl}" HorizontalAlignment="Left" Margin="0,5,0,5" />
+                            <StackPanel Grid.Column="1">                            
                             <TextBlock FontSize="12" Text="{x:Bind Title}" Padding="10,10,0,0" />
                             <TextBlock FontSize="12" Text="{x:Bind Length}" Padding="10,5,0,0" />
-                            <TextBlock FontSize="12" Text="{x:Bind Genre}" Padding="10,5,0,0" />
-                            <TextBlock FontSize="12" Text="{x:Bind Plot}" Padding="10,5,0,0" />
+                                <TextBlock FontSize="12" Text="{x:Bind Genre}" Padding="10,5,0,0" />
                             </StackPanel>
-                            <ComboBox HorizontalAlignment="Right" HorizontalContentAlignment="Right" Grid.Column="1" >
+                            <ComboBox HorizontalAlignment="Right" VerticalAlignment="Center" HorizontalContentAlignment="Right" Grid.Column="2" >
                                 <ComboBoxItem Content="1"/>
                                 <ComboBoxItem Content="2"/>
                                 <ComboBoxItem Content="3"/>
                                 <ComboBoxItem Content="4"/>
                                 <ComboBoxItem Content="5"/>
                             </ComboBox>
-                            <ToggleSwitch Grid.Column="2" Padding="5,5,0,0" />
+                            <ToggleSwitch Grid.Column="3" Padding="10,5,0,0" Toggled="ToggleSwitch_Toggled"  IsOn="{x:Bind IsFavourite}" OffContent="SetFavorite" OnContent="Favorited!"/>
                         </Grid>
                     </DataTemplate> 
                 </ListView.ItemTemplate>
@@ -76,21 +77,29 @@
             <ListView x:Name="favList" ItemsSource="{x:Bind favMovies}" IsItemClickEnabled="True" ItemClick="GridView_ItemClick" Grid.Row="1" Grid.Column="1" Grid.RowSpan="4" Grid.ColumnSpan="3">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="data:MovieDecorator">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="200"/>
+
+                            </Grid.ColumnDefinitions>
                             <Image x:Name="Poster" Width="150" Source="{x:Bind PosterUrl}" HorizontalAlignment="Left" Margin="0,5,0,5" />
-                            <TextBlock FontSize="12" Text="{x:Bind Title}" Padding="10,10,0,0" />
-                            <TextBlock FontSize="12" Text="{x:Bind Length}" Padding="10,5,0,0" />
-                            <TextBlock FontSize="12" Text="{x:Bind Genre}" Padding="10,5,0,0" />
-                            <TextBlock FontSize="12" Text="{x:Bind Plot}" Padding="10,5,0,0" />
-
-                            <Grid HorizontalAlignment="Stretch">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="9*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                            </Grid>
-                        </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock FontSize="12" Text="{x:Bind Title}" Padding="10,10,0,0" />
+                                <TextBlock FontSize="12" Text="{x:Bind Length}" Padding="10,5,0,0" />
+                                <TextBlock FontSize="12" Text="{x:Bind Genre}" Padding="10,5,0,0" />
+                            </StackPanel>
+                            <ComboBox HorizontalAlignment="Right" VerticalAlignment="Center" HorizontalContentAlignment="Right" Grid.Column="2" >
+                                <ComboBoxItem Content="1"/>
+                                <ComboBoxItem Content="2"/>
+                                <ComboBoxItem Content="3"/>
+                                <ComboBoxItem Content="4"/>
+                                <ComboBoxItem Content="5"/>
+                            </ComboBox>
+                            <ToggleSwitch Grid.Column="3" Toggled="ToggleSwitch_Toggled" Padding="10,5,0,0" />
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
 
@@ -104,20 +113,27 @@
                     <DataTemplate x:DataType="data:MovieDecorator">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="500"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="200"/>
 
                             </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                <Image x:Name="Poster" Width="150" Source="{x:Bind PosterUrl}" HorizontalAlignment="Left" Margin="0,5,0,5" />
-                                <TextBlock FontSize="12" Text="{x:Bind Title}" Padding="10,10,0,0" />
+                            <Image x:Name="Poster" Width="150" Source="{x:Bind PosterUrl}" HorizontalAlignment="Left" Margin="0,5,0,5" />
+                            <StackPanel Grid.Column="1">
+                                <TextBlock FontSize="16" Text="{x:Bind Title}" Padding="10,10,0,0" />
                                 <TextBlock FontSize="12" Text="{x:Bind Length}" Padding="10,5,0,0" />
                                 <TextBlock FontSize="12" Text="{x:Bind Genre}" Padding="10,5,0,0" />
-                                <TextBlock FontSize="12" Text="{x:Bind Plot}" Padding="10,5,0,0" />
+                                <TextBlock FontSize="16" Text="My Rating" Padding="10,5,0,0" />
+                                <TextBlock FontSize="16" Text="{x:Bind UserRating}" Padding="10,5,0,0" />
                             </StackPanel>
-
-                            <TextBlock FontSize="12" Text="VERANDER MIJ IN RATING" Padding="10,5,0,0" />
+                            <ComboBox HorizontalAlignment="Right" VerticalAlignment="Center" HorizontalContentAlignment="Right" Grid.Column="2" >
+                                <ComboBoxItem Content="1"/>
+                                <ComboBoxItem Content="2"/>
+                                <ComboBoxItem Content="3"/>
+                                <ComboBoxItem Content="4"/>
+                                <ComboBoxItem Content="5"/>
+                            </ComboBox>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
