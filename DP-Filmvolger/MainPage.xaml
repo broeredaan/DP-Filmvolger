@@ -40,7 +40,7 @@
             <ListView x:Name="DataList" ItemsSource="{x:Bind movies}" IsItemClickEnabled="True" ItemClick="GridView_ItemClick" Grid.Row="1" Grid.Column="1" Grid.RowSpan="4" Grid.ColumnSpan="3">
                 <ListView.ItemTemplate>
 
-                    <DataTemplate x:DataType="data:Movie">
+                    <DataTemplate x:DataType="data:MovieDecorator">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="500"/>
@@ -62,7 +62,7 @@
                                 <ComboBoxItem Content="4"/>
                                 <ComboBoxItem Content="5"/>
                             </ComboBox>
-                            <ToggleSwitch Grid.Column="2" />
+                            <ToggleSwitch Grid.Column="2" Padding="5,5,0,0" Toggled="" />
                         </Grid>
                     </DataTemplate> 
                 </ListView.ItemTemplate>
@@ -75,7 +75,7 @@
 
             <ListView x:Name="favList" ItemsSource="{x:Bind favMovies}" IsItemClickEnabled="True" ItemClick="GridView_ItemClick" Grid.Row="1" Grid.Column="1" Grid.RowSpan="4" Grid.ColumnSpan="3">
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="data:Movie">
+                    <DataTemplate x:DataType="data:MovieDecorator">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <Image x:Name="Poster" Width="150" Source="{x:Bind PosterUrl}" HorizontalAlignment="Left" Margin="0,5,0,5" />
                             <TextBlock FontSize="12" Text="{x:Bind Title}" Padding="10,10,0,0" />
@@ -101,7 +101,7 @@
         <Grid x:Name="RatingGrid" Visibility="Collapsed" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="4">
             <ListView x:Name="ratingList" ItemsSource="{x:Bind ratedMovies}" IsItemClickEnabled="True" ItemClick="GridView_ItemClick" Grid.Row="1" Grid.Column="1" Grid.RowSpan="4" Grid.ColumnSpan="3">
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="data:Movie">
+                    <DataTemplate x:DataType="data:MovieDecorator">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="500"/>
@@ -117,7 +117,7 @@
                                 <TextBlock FontSize="12" Text="{x:Bind Plot}" Padding="10,5,0,0" />
                             </StackPanel>
 
-                            <TextBlock FontSize="12" Text="{x:Bind UserRating}" Padding="10,5,0,0" />
+                            <TextBlock FontSize="12" Text="VERANDER MIJ IN RATING" Padding="10,5,0,0" />
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
