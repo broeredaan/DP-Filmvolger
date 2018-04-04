@@ -156,12 +156,18 @@ namespace DP_Filmvolger
             }
         }
 
+        public void UpdateMessage(string message)
+        {
+            ObserverText.Text = message;
+        }
+
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             Observer observer = new Observer();
-            
+            Notification.InsertPage(this);
             seasonSubject.Register(observer);
             seasonSubject.NotifyObservers("TestBericht");
+          
         }
     }
 }
